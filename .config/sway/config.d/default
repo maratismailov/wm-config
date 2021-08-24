@@ -37,8 +37,8 @@ exec swayidle -w\
 # Basics:
 #
     # Start a floating terminal
-    $mybind $mod+Return exec $term-float    
-         
+    $mybind $mod+Return exec $term-float
+
     # Open the power menu
     # $mybind $mod+0 exec $powermenu
 
@@ -47,7 +47,7 @@ exec swayidle -w\
 
     # Start your launcher
     $mybind $mod+d exec $menu
-    
+
     # Activities
     $mybind $mod+p exec ~/.config/wofi/windows.py
 
@@ -98,6 +98,11 @@ exec swayidle -w\
     $mybind $mod+7 workspace number 7
     $mybind $mod+8 workspace number 8
     $mybind $mod+9 workspace number 9
+    $mybind $mod+Ctrl+w+1 workspace chrome beta
+    $mybind $mod+Ctrl+w+2 workspace chromium
+    $mybind $mod+Ctrl+w+3 workspace firefox
+    $mybind $mod+Ctrl+w+4 workspace vs code insiders
+
     # Move focused container to workspace
     $mybind $mod+Shift+1 move container to workspace number 1
     $mybind $mod+Shift+2 move container to workspace number 2
@@ -112,6 +117,10 @@ exec swayidle -w\
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 
+    # Use mouse wheel to move between workspaces
+    $mybind --whole-window $mod+Ctrl+button4 workspace next
+    $mybind --whole-window $mod+Ctrl+button5 workspace prev
+
     output eDP-1 mode 1920x1980 position 0,0
     output HDMI-A-1 mode 1920x1980 position 1920,0
 
@@ -120,21 +129,31 @@ exec swayidle -w\
     $mybind $mod+Ctrl+Right move workspace to output right
 
 
-    # Screen modes. Note mirroring is not yet properly supported by sway :(
+    # Moving all workspaces between main and secondary outputs
     set $scr_aux "HDMI-A-1"
     set $scr_main "eDP-1"
-    set $mode_display AUX SCREEN: (l) LEFT (r) RIGHT (o) OFF (m) MIRROR
-    mode "$mode_display" {
-        bindsym l output $scr_aux enable, output $scr_main pos 0 0, output $scr_aux pos -$native_width 0, mode "default"
-        bindsym r output $scr_aux enable, output $scr_main pos 0 0, output $scr_aux pos $native_width 0, mode "default"
-        bindsym m output $scr_aux enable, output $scr_main pos 0 0, output $scr_aux pos 0 0, mode "default"
-        bindsym o output $scr_aux disable, mode "default"
-
+    set $move_all_workspaces move all workspaces to: (m)ain (s)econdary
+    mode "$move_all_workspaces" {
+        $mybind m [workspace=1] move workspace to output $scr_main;[workspace=2] move workspace to output $scr_main;[workspace=3] move workspace to output $scr_main;[workspace=4] move workspace to output $scr_main;[workspace=5] move workspace to output $scr_main;[workspace=6] move workspace to output $scr_main;[workspace=7] move workspace to output $scr_main;[workspace=8] move workspace to output $scr_main;[workspace=9] move workspace to output $scr_main; mode "default"
+        $mybind s [workspace=1] move workspace to output $scr_aux;[workspace=2] move workspace to output $scr_aux;[workspace=3] move workspace to output $scr_aux;[workspace=4] move workspace to output $scr_aux;[workspace=5] move workspace to output $scr_aux;[workspace=6] move workspace to output $scr_aux;[workspace=7] move workspace to output $scr_aux;[workspace=8] move workspace to output $scr_aux;[workspace=9] move workspace to output $scr_aux; mode "default"
         # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+        $mybind Return mode "default"
+        $mybind Escape mode "default"
     }
-    bindsym $mod+x mode "$mode_display"
+    $mybind $mod+x mode "$move_all_workspaces"
+
+
+    set $add_additional_workspaces (i)nsiders (c)hromium (f)irefox chrome (b)eta
+    mode "$add_additional_workspaces" {
+        $mybind i move workspace vs code insiders; workspace vs code insiders; mode "default"
+        $mybind c move workspace chromium; workspace chromium; mode "default"
+        $mybind f move workspace firefox; workspace firefox; mode "default"
+        $mybind b move workspace chrome beta; workspace chrome beta; mode "default"
+        # back to normal: Enter or Escape
+        $mybind Return mode "default"
+        $mybind Escape mode "default"
+    }
+    $mybind $mod+Ctrl+w mode "$add_additional_workspaces"
 #
 # Layout stuff:
 #
@@ -250,7 +269,7 @@ $mybind --whole-window --border $mod+shift+button5 resize grow width 5 px or 5 p
 #
 # Keybindings List
 #
-   $mybind $mod+t exec xed ~/.config/sway/cheatsheet    
+   $mybind $mod+t exec xed ~/.config/sway/cheatsheet
 
 
 input type:keyboard {

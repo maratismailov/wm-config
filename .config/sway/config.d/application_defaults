@@ -1,4 +1,27 @@
 # Assign workspaces
+assign [class="Google-chrome-beta"] workspace "chrome beta"
+for_window [class="Google-chrome-beta"] focus
+
+assign [class="Google-chrome"] workspace 1
+for_window [class="Google-chrome"] focus
+
+assign [class="Chromium"] workspace "chromium"
+for_window [class="Chromium"] focus
+
+assign [class="Code"] workspace 2
+for_window [class="Code"] focus
+
+assign [class="Code - Insiders"] workspace "vs code insiders"
+for_window [class="Code - Insiders"] focus
+
+assign [app_id="firefox"] workspace "firefox"
+for_window [app_id="firefox"] focus
+
+assign [app_id="DBeaver"] workspace 3
+for_window [app_id="DBeaver"] focus
+
+assign [app_id="mate-terminal"] workspace 4
+for_window [app_id="mate-terminal"] focus
 
 for_window [app_id="xed"] focus
 
@@ -36,6 +59,5 @@ for_window [title="Save File"] floating enable
 for_window [app_id="Chromium"] inhibit_idle fullscreen
 
 for_window [app_id=".*"] split toggle
-for_window [app_id="thunar"] splith
 for_window [class="Google-chrome"] split toggle
 default_orientation vertical
