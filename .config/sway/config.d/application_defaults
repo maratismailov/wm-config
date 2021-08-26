@@ -61,3 +61,5 @@ for_window [app_id="Chromium"] inhibit_idle fullscreen
 for_window [app_id=".*"] split toggle
 for_window [class="Google-chrome"] split toggle
 default_orientation vertical
+
+for_window [app_id="telegramdesktop" title="Telegram"] move scratchpad
