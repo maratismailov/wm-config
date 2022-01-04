@@ -27,6 +27,17 @@ mode $mode_system {
     $mybind Escape mode "default"
 }
 $mybind $mod+0 mode $mode_system
+
+set $mode_screen "(m)irror, (s)ingle"
+mode $mode_screen {
+    $mybind m exec --no-startup-id ~/.screenlayout/mirror.sh, mode "default"
+    $mybind s exec --no-startup-id ~/.screenlayout/single.sh, mode "default"
+    # exit screen mode: "Enter" or "Escape"
+    $mybind Return mode "default"
+    $mybind Escape mode "default"
+}
+$mybind $mod+c mode $mode_screen
+
 $mybind $mod+Shift+m  exec ~/.config/i3/run_mel.sh
 $mybind XF86MonBrightnessDown exec light -U 10
 $mybind XF86MonBrightnessUp exec light -A 10
