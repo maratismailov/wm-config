@@ -16,7 +16,7 @@ workspace_auto_back_and_forth yes
 
 set $mode_system "(l)ock, (e)xit, (s)uspend, (r)eboot, (Shift+s)hutdown"
 mode $mode_system {
-    $mybind l exec --no-startup-id ~/.config/sway/scripts/lockman.sh, mode "default"
+    $mybind l exec --no-startup-id ~/.config/i3/lock.sh, mode "default"
     $mybind s exec --no-startup-id systemctl suspend, mode "default"
     $mybind e exec --no-startup-id i3-msg exit"
     $mybind r exec --no-startup-id systemctl reboot, mode "default"
@@ -40,6 +40,7 @@ mode $mode_screen {
 $mybind $mod+c mode $mode_screen
 
 $mybind $mod+Shift+m workspace 4; exec ~/.config/i3/run_mel.sh
+$mybind $mod+Shift+g workspace 4; exec ~/.config/i3/run_gistool.sh
 $mybind XF86MonBrightnessDown exec light -U 10
 $mybind XF86MonBrightnessUp exec light -A 10
 
@@ -63,7 +64,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec --no-startup-id gxkb
+exec --no-startup-id ~/.config/i3/keyboard.sh
+# exec --no-startup-id ~/.config/i3/run_setxkbmap.sh
 exec --no-startup-id feh --bg-fill $HOME/.config/i3/wallpapers/wallpaper_8.jpg
 
 # Use pactl to adjust volume in PulseAudio.
@@ -222,3 +224,6 @@ for_window [id="telegram-desktop"] move scratchpad
 #
 $mybind $mod+Shift+minus move scratchpad
 $mybind $mod+minus scratchpad show
+$mybind Control+$mod+l exec "i3lock -c 000000"
+
+exec "xautolock -detectsleep -time 3 -locker \"i3lock -c 000000\""
